@@ -22,17 +22,18 @@ from IPython.display import display
 dataset_url = "http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/BSR/BSR_bsds500.tgz"
 data_dir = keras.utils.get_file(origin=dataset_url, fname="BSR", untar=True)
 root_dir = os.path.join(data_dir, "BSDS500/data")
-valid_dir = os.path.join(data_dir, "BSDS500/data/validation")
+valid_dir = os.path.join(data_dir, "BSDS500/data/images/val")
 
 '''
 preparing the dataset for later visuals
 '''
 dataset = os.path.join(root_dir, "images")
 test_path = os.path.join(dataset, "test")
-valid_path = os.path.join(dataset, "validation")
+valid_path = os.path.join(dataset, "val")
 
 
 IMG_SIZE = 300
+IMG_DIM = (300, 300)
 upscale_factor = 3
 input_size = IMG_SIZE // upscale_factor
 BATCH_SIZE = 8
@@ -65,7 +66,7 @@ test_data_generator = ImageDataGenerator(rescale=1. / 255)
 valid_ds = train_data_generator.flow_from_directory(
 	valid_path,
 	color_mode='grayscale',
-	target_size=IMG_SIZE,
+	target_size=IMG_DIM,
 	batch_size=BATCH_SIZE,
 	class_mode='categorical',
 	subset='validation')
